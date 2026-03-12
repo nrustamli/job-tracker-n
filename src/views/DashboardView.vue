@@ -4,7 +4,7 @@
     <header class="bg-white border-b border-border px-4 sm:px-6 lg:px-8 py-4">
       <div class="max-w-7xl mx-auto flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <h1 class="text-2xl sm:text-3xl font-bold text-primary">My Path</h1>
+          <h1 class="text-2xl sm:text-3xl font-bold text-primary"> 🚀 Path</h1>
           <span class="text-xs text-text-secondary font-medium tracking-wide uppercase">
             {{ activeCount }} Active
           </span>

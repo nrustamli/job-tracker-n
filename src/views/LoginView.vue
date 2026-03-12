@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen flex items-center justify-center bg-surface px-4">
     <div class="text-center max-w-sm w-full">
-      <h1 class="text-4xl font-bold text-primary mb-2">My Path</h1>
+      <h1 class="text-4xl font-bold text-primary mb-2"> 🚀 Path</h1>
       <p class="text-text-secondary mb-8">Track your job applications in one place</p>
       <button
         @click="loginWithGoogle"
@@ -42,7 +42,13 @@ import { useRouter } from 'vue-router'
 import { useAuth } from '../composables/useAuth'
 
 const router = useRouter()
-const { loginWithGoogle } = useAuth()
+const { loginWithGoogle, user } = useAuth()
+
+import { watch } from 'vue'
+
+watch(user, (newUser) => {
+  if (newUser) router.push({ name: 'Dashboard' })
+})
 
 function skipToPreview() {
   sessionStorage.setItem('guestMode', 'true')
