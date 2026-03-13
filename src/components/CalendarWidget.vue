@@ -19,7 +19,7 @@
 
     <!-- Day headers -->
     <div class="grid grid-cols-7 text-center text-xs text-text-secondary font-medium mb-2">
-      <span v-for="d in ['S', 'M', 'T', 'W', 'T', 'F', 'S']" :key="d">{{ d }}</span>
+      <span v-for="d in dayHeaders" :key="d">{{ d }}</span>
     </div>
 
     <!-- Calendar grid -->
@@ -52,6 +52,9 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useLanguage } from '../composables/useLanguage'
+
+const { lang } = useLanguage()
 
 const props = defineProps({
   events: Array,
@@ -61,7 +64,20 @@ const props = defineProps({
 const currentMonth = ref(new Date().getMonth())
 const currentYear = ref(new Date().getFullYear())
 
+const dayHeaders = computed(() => {
+  if (lang.value === 'az') return ['B', 'BE', 'ÇA', 'Ç', 'CA', 'C', 'Ş']
+  return ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+})
+
+const AZ_MONTHS = [
+  'Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'İyun',
+  'İyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr',
+]
+
 const monthLabel = computed(() => {
+  if (lang.value === 'az') {
+    return `${AZ_MONTHS[currentMonth.value]} ${currentYear.value}`
+  }
   const date = new Date(currentYear.value, currentMonth.value)
   return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
 })

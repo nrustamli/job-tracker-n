@@ -1,8 +1,11 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-surface px-4">
+  <div class="min-h-screen flex items-center justify-center bg-surface px-4 relative">
+    <div class="absolute top-4 right-4">
+      <LanguageSwitch />
+    </div>
     <div class="text-center max-w-sm w-full">
       <h1 class="text-4xl font-bold text-primary mb-2"> 🚀 Path</h1>
-      <p class="text-text-secondary mb-8">Track your job applications in one place</p>
+      <p class="text-text-secondary mb-8">{{ t('tagline') }}</p>
       <button
         @click="loginWithGoogle"
         class="w-full flex items-center justify-center gap-3 bg-white border border-border rounded-lg px-6 py-3 text-text-primary font-medium hover:bg-gray-50 transition-colors shadow-sm cursor-pointer"
@@ -25,13 +28,13 @@
             fill="#EA4335"
           />
         </svg>
-        Sign in with Google
+        {{ t('signInWithGoogle') }}
       </button>
       <button
         @click="skipToPreview"
         class="mt-4 text-sm text-gray-400 hover:text-gray-500 transition-colors cursor-pointer"
       >
-        Skip to preview
+        {{ t('skipToPreview') }}
       </button>
     </div>
   </div>
@@ -40,9 +43,12 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { useAuth } from '../composables/useAuth'
+import { useI18n } from '../i18n'
+import LanguageSwitch from '../components/LanguageSwitch.vue'
 
 const router = useRouter()
 const { loginWithGoogle, user } = useAuth()
+const { t } = useI18n()
 
 import { watch } from 'vue'
 

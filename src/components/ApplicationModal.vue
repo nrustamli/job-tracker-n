@@ -4,7 +4,7 @@
     <div class="relative bg-white rounded-xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
       <div class="px-6 py-4 border-b border-border flex items-center justify-between">
         <h2 class="text-lg font-semibold text-text-primary">
-          {{ application ? 'Edit Application' : 'New Application' }}
+          {{ application ? t('editApplication') : t('newApplication') }}
         </h2>
         <button @click="$emit('close')" class="text-text-secondary hover:text-text-primary cursor-pointer">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -16,40 +16,40 @@
       <form @submit.prevent="handleSave" class="p-6 space-y-4">
         <!-- Job Title -->
         <div>
-          <label class="block text-sm font-medium text-text-primary mb-1">Job Title *</label>
+          <label class="block text-sm font-medium text-text-primary mb-1">{{ t('jobTitle') }}</label>
           <input
             v-model="form.title"
             required
             class="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
-            placeholder="e.g. Senior Frontend Engineer"
+            :placeholder="t('jobTitlePlaceholder')"
           />
         </div>
 
         <!-- Company -->
         <div>
-          <label class="block text-sm font-medium text-text-primary mb-1">Company *</label>
+          <label class="block text-sm font-medium text-text-primary mb-1">{{ t('company') }}</label>
           <input
             v-model="form.company"
             required
             class="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
-            placeholder="e.g. Stripe"
+            :placeholder="t('companyPlaceholder')"
           />
         </div>
 
         <!-- Status -->
         <div>
-          <label class="block text-sm font-medium text-text-primary mb-1">Status</label>
+          <label class="block text-sm font-medium text-text-primary mb-1">{{ t('status') }}</label>
           <select
             v-model="form.status"
             class="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary bg-white"
           >
-            <option v-for="s in STATUSES" :key="s.key" :value="s.key">{{ s.label }}</option>
+            <option v-for="s in STATUSES" :key="s.key" :value="s.key">{{ t(STATUS_LABEL_KEYS[s.key]) }}</option>
           </select>
         </div>
 
         <!-- Tags -->
         <div>
-          <label class="block text-sm font-medium text-text-primary mb-1">Tags</label>
+          <label class="block text-sm font-medium text-text-primary mb-1">{{ t('tags') }}</label>
           <div class="flex flex-wrap gap-2 mb-2">
             <span
               v-for="tag in form.tags"
@@ -65,14 +65,14 @@
               v-model="newTag"
               @keydown.enter.prevent="addTag"
               class="flex-1 border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
-              placeholder="Add a tag and press Enter"
+              :placeholder="t('addTagPlaceholder')"
             />
             <button
               type="button"
               @click="addTag"
               class="px-3 py-2 text-sm bg-gray-100 rounded-lg hover:bg-gray-200 cursor-pointer"
             >
-              Add
+              {{ t('add') }}
             </button>
           </div>
           <!-- Suggested tags from existing -->
@@ -92,7 +92,7 @@
         <!-- Salary Range -->
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-sm font-medium text-text-primary mb-1">Min Salary</label>
+            <label class="block text-sm font-medium text-text-primary mb-1">{{ t('minSalary') }}</label>
             <input
               v-model.number="form.salaryMin"
               type="number"
@@ -101,7 +101,7 @@
             />
           </div>
           <div>
-            <label class="block text-sm font-medium text-text-primary mb-1">Max Salary</label>
+            <label class="block text-sm font-medium text-text-primary mb-1">{{ t('maxSalary') }}</label>
             <input
               v-model.number="form.salaryMax"
               type="number"
@@ -113,7 +113,7 @@
 
         <!-- URL -->
         <div>
-          <label class="block text-sm font-medium text-text-primary mb-1">Job URL</label>
+          <label class="block text-sm font-medium text-text-primary mb-1">{{ t('jobUrl') }}</label>
           <input
             v-model="form.url"
             type="url"
@@ -124,12 +124,12 @@
 
         <!-- Notes -->
         <div>
-          <label class="block text-sm font-medium text-text-primary mb-1">Notes</label>
+          <label class="block text-sm font-medium text-text-primary mb-1">{{ t('notes') }}</label>
           <textarea
             v-model="form.notes"
             rows="3"
             class="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary resize-none"
-            placeholder="Any notes about this application..."
+            :placeholder="t('notesPlaceholder')"
           ></textarea>
         </div>
 
@@ -141,7 +141,7 @@
             @click="$emit('delete')"
             class="text-sm text-red-500 hover:text-red-700 cursor-pointer"
           >
-            Delete Application
+            {{ t('deleteApplication') }}
           </button>
           <span v-else></span>
           <div class="flex gap-2">
@@ -150,13 +150,13 @@
               @click="$emit('close')"
               class="px-4 py-2 text-sm text-text-secondary hover:text-text-primary cursor-pointer"
             >
-              Cancel
+              {{ t('cancel') }}
             </button>
             <button
               type="submit"
               class="px-5 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-dark transition-colors cursor-pointer"
             >
-              {{ application ? 'Update' : 'Add' }}
+              {{ application ? t('update') : t('add') }}
             </button>
           </div>
         </div>
@@ -167,7 +167,10 @@
 
 <script setup>
 import { ref, reactive, computed } from 'vue'
-import { STATUSES } from '../composables/useApplications'
+import { STATUSES, STATUS_LABEL_KEYS } from '../composables/useApplications'
+import { useI18n } from '../i18n'
+
+const { t } = useI18n()
 
 const props = defineProps({
   application: Object,

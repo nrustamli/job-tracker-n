@@ -9,7 +9,7 @@
           : 'text-text-secondary hover:text-text-primary'
       ]"
     >
-      All
+      {{ t('all') }}
     </button>
     <button
       v-for="tag in tags"
@@ -28,9 +28,13 @@
 </template>
 
 <script setup>
+import { useI18n } from '../i18n'
+
 defineProps({
   active: String,
   tags: Array,
 })
 defineEmits(['update'])
+
+const { t } = useI18n()
 </script>

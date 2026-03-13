@@ -6,10 +6,11 @@
         <div class="flex items-center gap-3">
           <h1 class="text-2xl sm:text-3xl font-bold text-primary"> 🚀 Path</h1>
           <span class="text-xs text-text-secondary font-medium tracking-wide uppercase">
-            {{ activeCount }} Active
+            {{ activeCount }} {{ t('active') }}
           </span>
         </div>
         <div class="flex items-center gap-3">
+          <LanguageSwitch />
           <button
             @click="handleAddClick"
             class="bg-accent hover:bg-accent-light text-white font-semibold px-4 py-2 rounded-lg transition-colors flex items-center gap-2 text-sm cursor-pointer"
@@ -17,7 +18,7 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
             </svg>
-            <span class="hidden sm:inline">Add Application</span>
+            <span class="hidden sm:inline">{{ t('addApplication') }}</span>
           </button>
           <!-- Signed-in: avatar menu -->
           <div v-if="user" class="relative" ref="menuRef">
@@ -37,7 +38,7 @@
                 @click="logout"
                 class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer"
               >
-                Sign out
+                {{ t('signOut') }}
               </button>
             </div>
           </div>
@@ -47,7 +48,7 @@
             @click="goToLogin"
             class="bg-primary hover:bg-primary/90 text-white font-semibold px-4 py-2 rounded-lg transition-colors text-sm cursor-pointer"
           >
-            Sign in
+            {{ t('signIn') }}
           </button>
         </div>
       </div>
@@ -76,8 +77,8 @@
               v-if="filteredApplications.length === 0"
               class="px-6 py-12 text-center text-text-secondary"
             >
-              <p class="text-lg">No applications yet</p>
-              <p class="text-sm mt-1">Click "Add Application" to get started</p>
+              <p class="text-lg">{{ t('noApplicationsYet') }}</p>
+              <p class="text-sm mt-1">{{ t('clickAddToStart') }}</p>
             </div>
           </div>
         </div>
@@ -131,6 +132,7 @@ import { useAuth } from '../composables/useAuth'
 import { useApplications } from '../composables/useApplications'
 import { useEvents } from '../composables/useEvents'
 import { useRouter } from 'vue-router'
+import { useI18n } from '../i18n'
 import FilterTabs from '../components/FilterTabs.vue'
 import ApplicationRow from '../components/ApplicationRow.vue'
 import PipelineChart from '../components/PipelineChart.vue'
@@ -138,7 +140,9 @@ import CalendarWidget from '../components/CalendarWidget.vue'
 import UpcomingEvents from '../components/UpcomingEvents.vue'
 import ApplicationModal from '../components/ApplicationModal.vue'
 import EventModal from '../components/EventModal.vue'
+import LanguageSwitch from '../components/LanguageSwitch.vue'
 
+const { t } = useI18n()
 const router = useRouter()
 const { user, logout: authLogout } = useAuth()
 const userId = ref(user.value?.uid)

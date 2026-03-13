@@ -26,6 +26,16 @@ export const EVENT_TYPES = [
   'Other',
 ]
 
+export const EVENT_TYPE_LABEL_KEYS = {
+  'Phone Screen': 'phoneScreen',
+  'Technical Interview': 'technicalInterview',
+  'Behavioral Interview': 'behavioralInterview',
+  'Design Round': 'designRound',
+  'Final Round': 'finalRound',
+  'Take Home': 'takeHome',
+  'Other': 'other',
+}
+
 export function useEvents(userId) {
   function subscribe() {
     if (unsubscribe) unsubscribe()

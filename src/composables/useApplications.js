@@ -26,6 +26,15 @@ export const STATUSES = [
   { key: 'ghosted', label: 'Ghosted', color: 'bg-status-ghosted' },
 ]
 
+export const STATUS_LABEL_KEYS = {
+  applied: 'applied',
+  phone: 'phoneScreen',
+  interview: 'interviews',
+  offer: 'offer',
+  rejected: 'rejected',
+  ghosted: 'ghosted',
+}
+
 export function useApplications(userId) {
   function subscribe() {
     if (unsubscribe) unsubscribe()

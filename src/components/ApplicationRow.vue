@@ -28,7 +28,10 @@
 
 <script setup>
 import { computed } from 'vue'
-import { STATUSES } from '../composables/useApplications'
+import { STATUSES, STATUS_LABEL_KEYS } from '../composables/useApplications'
+import { useI18n } from '../i18n'
+
+const { t } = useI18n()
 
 const props = defineProps({
   application: Object,
@@ -37,5 +40,8 @@ defineEmits(['click'])
 
 const status = computed(() => STATUSES.find((s) => s.key === props.application.status))
 const statusColor = computed(() => status.value?.color || 'bg-gray-400')
-const statusLabel = computed(() => status.value?.label || props.application.status)
+const statusLabel = computed(() => {
+  const key = STATUS_LABEL_KEYS[props.application.status]
+  return key ? t(key) : props.application.status
+})
 </script>
